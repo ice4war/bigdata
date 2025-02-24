@@ -1,0 +1,1 @@
+/etc/hbase/conf/hbase-env.sh
