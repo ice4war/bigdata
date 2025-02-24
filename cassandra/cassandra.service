@@ -1,0 +1,17 @@
+[Unit]
+Description=Apache Cassandra
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=forking
+User=subzero
+Group=subzero
+Environment=JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+ExecStart=/usr/bin/sh -c '/usr/local/share/cassandra/bin/cassandra -f'
+ExecStopPost=/usr/bin/rm -rf /var/lib/cassandra/saved_caches;/usr/bin/echo "Cassandra Daemon Stopped"
+Restart=on-abnormal
+
+
+[Install]
+WantedBy=multi-user.target

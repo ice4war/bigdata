@@ -1,0 +1,19 @@
+[Unit]
+Description=Apache Kafka Service
+Requires=network.target remote-fs.target zookeeper.service
+After=network.target remote-fs.target zookeeper.service
+
+[Service]
+Type=simple
+User=subzero
+Group=subzero
+ExecStart=/bin/sh -c '/usr/local/share/kafka/bin/kafka-server-start.sh /usr/local/share/kafka/config/server.properties'
+ExecStop=/usr/local/share/kafka/bin/zookeeper-server-stop.sh
+Restart=on-abnormal
+Environment="KAFKA_HEAP_OPTS=-Xmx512M -Xms512M"
+Environment="KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.net.preferIPv4Stack=true"
+Environment="JMX_PORT=9999"
+
+
+[Install]
+WantedBy=multi-user.target
